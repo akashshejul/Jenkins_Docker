@@ -1,0 +1,24 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - jupyterhub
+
+  jupyterhub:
+    build:
+      context: .
+      dockerfile: Dockerfile.jupyterhub
+    ports:
+      - "8000:8000"
+    volumes:
+      - jupyterhub-data:/srv/jupyterhub
+    restart: always
+
+volumes:
+  jupyterhub-data:
